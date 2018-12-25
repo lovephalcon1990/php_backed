@@ -19,14 +19,14 @@ class Cfg
      * 初始化配置 cfg::init()，在comm.php里调用
      */
     public static function init(){
-        self::$comm = (array)self::load('msite', ENV, false, MSITE);
+        self::$comm = (array)self::load('msite', ENV, false);
     }
 
     /**
      * 加载配置
      * @return array()
      */
-    public static function load($name, $env = ENV , $reload = false , $site = SITE){
+    public static function load($name, $env = ENV, $reload = false){
         $file = ROOT_CFG . $env .'/'. $name .'.php';
         if($reload && isset(self::$aCache[$file])){
             unset(self::$aCache[$file]);//重新加载的情况清除缓存

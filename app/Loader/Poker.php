@@ -1,7 +1,9 @@
 <?php
 namespace App\Loader;
 
+use App\Core\Container;
 use App\Core\Loader;
+
 
 /**
  * Class App
@@ -26,6 +28,7 @@ class Poker extends Loader
      */
     protected function load()
     {
-
+        self::$app = new Container();
     }
+
 }

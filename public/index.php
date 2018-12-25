@@ -15,7 +15,6 @@ try {
     if (is_file($vendorLoader)) {
         require_once $vendorLoader;
     }
-
     $app = new \App\Loader\Poker();
     $app->run();
 } catch (\Exception $e) {
