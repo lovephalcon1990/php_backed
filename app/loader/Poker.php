@@ -14,7 +14,7 @@ class Poker extends Loader
     public static $app="";
 
     /**
-     * 执行钩子
+     * 执行before
      */
     public function beforeRun()
     {
