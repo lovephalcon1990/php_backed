@@ -10,12 +10,15 @@ use App\Core\Loader;
 class Poker extends Loader
 {
 
+
+    public static $app="";
+
     /**
      * 执行钩子
      */
     public function beforeRun()
     {
-        self::register();
+        self::before();
     }
 
     /**
@@ -23,6 +26,6 @@ class Poker extends Loader
      */
     protected function load()
     {
-        
+
     }
 }

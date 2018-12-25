@@ -2,7 +2,6 @@
 
 namespace App\Core;
 
-use App\Core\Log;
 
 class Error
 {

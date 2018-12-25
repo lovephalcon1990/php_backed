@@ -1,24 +1,19 @@
 <?php
 namespace App\Core;
 
+use App\Func\Cfg;
 use App\Func\Def;
+
 /**
- * phalcon 服务引导入口
- * 采用设计模式模板方法
- * 利用继承来改变部分接口
- * @see http://www.phppan.com/2010/09/php-design-pattern-16-template-method/
+ * 继承来改变部分接口
  */
 abstract class Loader
 {
-    public $config;
-
     /**
      * 执行
      */
     public function run()
     {
-        $this->beforeRun();
-
         /*
          * PHP版本检测
          */
@@ -28,6 +23,8 @@ abstract class Loader
          * 检测框架是否安装
          */
         extension_loaded('mysqli') or die('Phalcon framework extension is not installed');
+
+        $this->beforeRun();
 
         /*
          * 默认时区定义
@@ -46,23 +43,13 @@ abstract class Loader
          */
         mb_internal_encoding('UTF-8');
 
-        /**
-         * Include defined constants.
-         */
-        Def::init();
 
         /*
          * use Phalcon Error handle
-         *
-         * @see http://php.net/manual/zh/function.set-error-handler.php
          * @see https://github.com/phalcon/incubator/tree/master/Library/Phalcon/Error
          */
         Error::register();
 
-        /**
-         *  调用加载器
-         */
-        $this->load();
     }
 
     /**
@@ -73,27 +60,17 @@ abstract class Loader
     abstract protected function load();
 
     /**
-     * 获取加载器
-     */
-    public function getLoader()
-    {
-    }
-
-    /**
      * 设置配置
-     *
-     * @param $config
      */
-    public function setConfig($config)
+    public static function before()
     {
-        $this->config = $config;
-    }
-
-    /**
-     * 注册自动加载
-     */
-    public static function register()
-    {
-
+        /**
+         * Include defined constants.
+         */
+        Def::init();
+        /**
+         * Include site config.
+         */
+        Cfg::init();
     }
 }

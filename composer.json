@@ -18,9 +18,7 @@
   },
   "autoload": {
     "psr-4": {
-      "App\\Core\\": "app/core/",
-      "App\\Func\\": "app/func/",
-      "App\\Loader\\": "app/loader/"
+      "App\\": "app/"
     }
   }
 }

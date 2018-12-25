@@ -8,11 +8,12 @@ class Def
      */
     public static function init()
     {
-
-        define('ENV', get_cfg_var('my.env'));
+        $env = get_cfg_var('my.env');
+        define('ENV', $env ? $env : "dev");
         defined('PRO')  or define('PRO', ENV==='prd');
 
         define('ROOT_DATA', ROOT."data/");
+        define('ROOT_CFG', ROOT."conf/");
 
         define('IS_CLI', (PHP_SAPI === 'cli'));
 
