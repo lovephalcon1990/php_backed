@@ -29,19 +29,19 @@ abstract class Loader
         /*
          * 默认时区定义
          */
-        if (date_default_timezone_get() != 'Asia/Shanghai') {
-            date_default_timezone_set('Asia/Shanghai');
+        if (date_default_timezone_get() != Cfg::$comm["timeZone"]) {
+            date_default_timezone_set(Cfg::$comm["timeZone"]);
         }
 
         /*
          * 设置默认区域
          */
-        setlocale(LC_ALL, 'zh_CN.utf-8');
+        setlocale(LC_ALL, Cfg::$comm["area"]);
 
         /*
          * 设置内部字符默认编码为 UTF-8
          */
-        mb_internal_encoding('UTF-8');
+        mb_internal_encoding(Cfg::$comm["coding"]);
 
 
         /*
