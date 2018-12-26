@@ -20,3 +20,9 @@ try {
 } catch (\Exception $e) {
     echo $e->getMessage();
 }
+
+function p($data){
+    echo "<pre>";
+    print_r($data);
+    exit;
+}

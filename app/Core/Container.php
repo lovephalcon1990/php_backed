@@ -25,4 +25,12 @@ class Container
         self::$_app["Route"] = new Route();
         return self::$_app["Route"];
     }
+
+    public function request(){
+        if(isset(self::$_app['Request']) && self::$_app['Request']){
+            return self::$_app['Request'];
+        }
+        self::$_app["Request"] = new Request();
+        return self::$_app["Request"];
+    }
 }
