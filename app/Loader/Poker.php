@@ -28,7 +28,8 @@ class Poker extends Loader
      */
     protected function load()
     {
-        self::$app = new Container();
+        self::$app = Container::getInstance();
+        self::$app->request();
     }
 
 }

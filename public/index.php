@@ -5,7 +5,6 @@
  * Date: 2018/12/24
  * Time: 14:22
  */
-
 try {
     define("ROOT",dirname(__DIR__)."/");
     /**

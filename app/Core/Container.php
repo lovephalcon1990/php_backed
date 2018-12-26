@@ -14,6 +14,30 @@ class Container
 
     private static $_app=[];
 
+    private static $contain;
+
+    private function __construct()
+    {
+
+    }
+
+    public static function getInstance(){
+        if(self::$contain){
+            return self::$contain;
+        }
+        return self::$contain = new self();
+    }
+
+    /**
+     * @var Request
+     */
+    public function request(){
+        if(isset(self::$_app['Request']) && self::$_app['Request']){
+            return self::$_app['Request'];
+        }
+        self::$_app["Request"] = new Request();
+        return self::$_app["Request"];
+    }
 
     /**
      * @var Route
@@ -24,13 +48,5 @@ class Container
         }
         self::$_app["Route"] = new Route();
         return self::$_app["Route"];
-    }
-
-    public function request(){
-        if(isset(self::$_app['Request']) && self::$_app['Request']){
-            return self::$_app['Request'];
-        }
-        self::$_app["Request"] = new Request();
-        return self::$_app["Request"];
     }
 }

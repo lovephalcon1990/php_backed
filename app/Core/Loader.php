@@ -50,6 +50,8 @@ abstract class Loader
          */
         Error::register();
 
+        $this->load();
+
     }
 
     /**
