@@ -13,6 +13,9 @@ class Request
 {
     public function __construct()
     {
-        p($_SERVER);
+    }
+
+    public function getUri(){
+
     }
 }

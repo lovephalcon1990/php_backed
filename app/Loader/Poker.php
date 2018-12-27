@@ -30,6 +30,7 @@ class Poker extends Loader
     {
         self::$app = Container::getInstance();
         self::$app->request();
+        self::$app->route();
     }
 
 }
