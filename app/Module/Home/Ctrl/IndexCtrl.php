@@ -6,10 +6,10 @@
  * Time: 下午10:37
  */
 
-namespace App\Module\Ctrl;
+namespace App\Module\Home\Ctrl;
 
 
-class HomeCtrl
+class IndexCtrl
 {
     public function __construct()
     {
@@ -17,6 +17,6 @@ class HomeCtrl
     }
 
     public function actionIndex(){
-
+        echo 123;
     }
 }

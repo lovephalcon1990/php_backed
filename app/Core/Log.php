@@ -44,22 +44,18 @@ class Log{
 			return false;
 		}
 		$d = (array)debug_backtrace();
-		if($d[1] && $d[1]['function'] && ($d[1]['class'] === 'ModelLogs' && $d[1]['function'] === 'debug' || $d[1]['function'] === 'debugDemo')){//兼容老方法logs.php:debug
-			$d[0] = $d[1];
-			$d[1] = $d[2];
-		}
-		if($d[1] && $d[1]['function']){//方法中调用
-			if($dir = $d[1]['class']){//类中的方法
-				$dir = str_replace('\\', '_', $dir);
-			}else{//普通方法
-				$dir = 'debug';
-			}
-			$fn = $d[1]['function'];
-			$line = $d[0]['line'];
-			if(!$fname){
-				$fname = $dir . '/' . ($fname ? $fname : $fn); //自动按类进行分子目录
-				$prefix = '[' . $fn . ':' . $line . "]\t";
-			}else if($d[1]['class']){
+		if($d[1] && $d[1]['function']) {//方法中调用
+            if ($dir = $d[1]['class']) {//类中的方法
+                $dir = str_replace('\\', '_', $dir);
+            } else {//普通方法
+                $dir = 'debug';
+            }
+            $fn = $d[1]['function'];
+            $line = $d[0]['line'];
+            if (!$fname) {
+                $fname = $dir . '/' . ($fname ? $fname : $fn); //自动按类进行分子目录
+                $prefix = '[' . $fn . ':' . $line . "]\t";
+            }else if($d[1]['class']){
 				$prefix = '[' . $d[1]['class'] . $d[1]['type'] . $fn . ':' . $line . "]\t";
 			}
 		}else{//文件直接调用

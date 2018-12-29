@@ -10,34 +10,37 @@ class Error
      */
     public static function register()
     {
-        set_error_handler(function ($errno, $errstr, $errfile, $errline) {
-            if (!($errno && error_reporting())) {
-                return;
-            }
+        if(PRO){
+            set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+                if (!($errno && error_reporting())) {
 
-            $options = array(
-                'type'    => $errno,
-                'message' => $errstr,
-                'file'    => $errfile,
-                'line'    => $errline,
-                'isError' => true,
-            );
+                    return;
+                }
 
-            static::handle($options);
-        });
+                $options = array(
+                    'type'    => $errno,
+                    'message' => $errstr,
+                    'file'    => $errfile,
+                    'line'    => $errline,
+                    'isError' => true,
+                );
 
-        set_exception_handler(function ($e) {
-            $options = array(
-                'type'        => $e->getCode(),
-                'message'     => $e->getMessage(),
-                'file'        => $e->getFile(),
-                'line'        => $e->getLine(),
-                'isException' => true,
-                'exception'   => $e,
-            );
+                static::handle($options);
+            });
 
-            static::handle($options);
-        });
+            set_exception_handler(function ($e) {
+                $options = array(
+                    'type'        => $e->getCode(),
+                    'message'     => $e->getMessage(),
+                    'file'        => $e->getFile(),
+                    'line'        => $e->getLine(),
+                    'isException' => true,
+                    'exception'   => $e,
+                );
+
+                static::handle($options);
+            });
+        }
 
         register_shutdown_function(function () {
             if (!is_null($options = error_get_last())) {

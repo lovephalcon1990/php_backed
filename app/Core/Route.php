@@ -10,43 +10,63 @@ namespace App\Core;
 
 class Route
 {
+    public $module = "Home";
+
+    public $ctrl = "IndexCtrl";
+
+    public $action="ActionIndex";
+
+    public $ctrlNameSpace = "App\Module\\";
+
     public function __construct()
     {
-        self::_addSlashesForGPC();
+
     }
 
 
-    public function parseRequest()
+    public function handle(){
+
+        $request_uri = $_SERVER["REQUEST_URI"];
+        $arr = parse_url($request_uri);
+        $preg = "/^\/([a-z]*)\/([a-z]*)\/([a-z]*)$/i";
+
+        preg_match($preg, $arr["path"], $mathes);
+        if(isset($mathes[1]) && $mathes[1]){
+            $this->module = $this->toBigHump($mathes[1]);
+        }
+        if(isset($mathes[2]) && $mathes[2]){
+            $this->ctrl = $this->toBigHump($mathes[2]);
+        }
+        if(isset($mathes[3]) && $mathes[3]){
+            $this->action = $this->toBigHump($mathes[3]);
+        }
+        $ctrlNameSpace = $this->ctrlNameSpace. $this->module."\\Ctrl\\".$this->ctrl;
+        if(!class_exists($ctrlNameSpace)){
+            $ctrlNameSpace = $this->ctrlNameSpace. "Home\\Ctrl\\IndexCtrl";
+        }
+        $ctrlObj = new $ctrlNameSpace();
+        if(!method_exists($ctrlObj, $this->action)){
+            throw new \Exception("uri not exit",404);
+        }
+        call_user_func([$ctrlObj, $this->action]);
+    }
+
+    /**
+     * 转大驼峰结构
+     * @param $str
+     * @param string $type
+     * @return string
+     */
+    private function toBigHump($str, $type='m')
     {
-
-    }
-
-    /**
-     * 递归将数组字符串元素中的特殊字符转义（单引号（'）、双引号（"）、反斜线（\）、NUL（NULL字符））
-     * @param array $arr 数组
-     * @return array
-     */
-    public static function addSlashes($arr) {
-        foreach ($arr as &$val) { // 注意这里的$val一定要是引用
-            if (is_string($val)) {
-                $val = addslashes($val);
-            } else if (is_array($val)) {
-                call_user_func(__METHOD__, $val);
-            }
+        $str = strtolower($str);
+        switch ($type){
+            case 'm': $str = ucfirst($str);break;
+            case 'c': $str = ucfirst($str)."Ctrl";break;
+            case 'a': $str = "Action".ucfirst($str);break;
         }
-        return $arr;
+        return $str;
     }
 
-    /**
-     * 对GET/POST/COOKIE超全局数组中的特殊字符进行转义处理
-     */
-    private static function _addSlashesForGPC() {
-        // 如果系统没有开启对超全局变量中的特殊字符自动转义，则手动进行转义之
-        if (!get_magic_quotes_gpc() && !defined('GPC_SLASHES_ADDED')) {
-            define('GPC_SLASHES_ADDED', 1);
-            !empty($_GET) && $_GET = self::addSlashes($_GET);
-            !empty($_POST) && $_POST = self::addSlashes($_POST);
-            !empty($_COOKIE) && $_COOKIE = self::addSlashes($_COOKIE);
-        }
-    }
+
 }
